@@ -28,8 +28,8 @@
         <!--GitHub Repositories-->
         <scene sceneID="Xqm-eq-iOd">
             <objects>
-                <viewController id="lth-L0-rbd" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="SGt-PN-IPH" customClass="Main" customModule="GitHubRepos" customModuleProvider="target">
+                <viewController storyboardIdentifier="MainVC" id="lth-L0-rbd" customClass="MainVC" customModule="GitHubRepos" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SGt-PN-IPH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
