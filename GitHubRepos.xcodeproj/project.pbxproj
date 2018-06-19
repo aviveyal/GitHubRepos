@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		087ADF14B91E16248A1C7C55 /* Pods_GitHubRepos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45CEAFA0E33DB6FD6D73E02 /* Pods_GitHubRepos.framework */; };
 		72AD414E7833F6F6BFA4B186 /* Pods_GitHubReposTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0AACFE10AA21C9AE76D4570 /* Pods_GitHubReposTests.framework */; };
+		8400334F20D905F70025B020 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8400334E20D905F60025B020 /* libsqlite3.0.tbd */; };
+		8400335320D911F60025B020 /* ModelSql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8400335220D911F60025B020 /* ModelSql.swift */; };
 		8404509E20D87914007A7735 /* RepoDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8404509D20D87914007A7735 /* RepoDetailsVC.swift */; };
 		842F72F120D67A1600F78C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F72F020D67A1600F78C08 /* AppDelegate.swift */; };
 		842F72F620D67A1600F78C08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 842F72F420D67A1600F78C08 /* Main.storyboard */; };
@@ -48,6 +50,8 @@
 		073075F7518D8576BDE774F5 /* Pods-GitHubReposUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubReposUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubReposUITests/Pods-GitHubReposUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5F346E0BE93FA5044EE59186 /* Pods-GitHubRepos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubRepos.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubRepos/Pods-GitHubRepos.debug.xcconfig"; sourceTree = "<group>"; };
 		61D5E826E72FD19891E7A0BD /* Pods-GitHubReposUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubReposUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubReposUITests/Pods-GitHubReposUITests.release.xcconfig"; sourceTree = "<group>"; };
+		8400334E20D905F60025B020 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		8400335220D911F60025B020 /* ModelSql.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSql.swift; sourceTree = "<group>"; };
 		8404509D20D87914007A7735 /* RepoDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoDetailsVC.swift; sourceTree = "<group>"; };
 		842F72ED20D67A1600F78C08 /* GitHubRepos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubRepos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		842F72F020D67A1600F78C08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8400334F20D905F70025B020 /* libsqlite3.0.tbd in Frameworks */,
 				087ADF14B91E16248A1C7C55 /* Pods_GitHubRepos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -168,6 +173,7 @@
 				842F732320D6834900F78C08 /* Repo+sql.swift */,
 				842F732D20D69AC300F78C08 /* GitHubAPI.swift */,
 				84494BF020D8717F00C89923 /* AvatarDownload.swift */,
+				8400335220D911F60025B020 /* ModelSql.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -214,6 +220,7 @@
 		ECCCA57C86BF84890ABB486B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8400334E20D905F60025B020 /* libsqlite3.0.tbd */,
 				F45CEAFA0E33DB6FD6D73E02 /* Pods_GitHubRepos.framework */,
 				E0AACFE10AA21C9AE76D4570 /* Pods_GitHubReposTests.framework */,
 				FE88E296BE0C20032654415F /* Pods_GitHubReposUITests.framework */,
@@ -444,6 +451,7 @@
 				842F732C20D68D6700F78C08 /* ReposVC.swift in Sources */,
 				842F732A20D68CE200F78C08 /* RepoViewCell.swift in Sources */,
 				842F72F120D67A1600F78C08 /* AppDelegate.swift in Sources */,
+				8400335320D911F60025B020 /* ModelSql.swift in Sources */,
 				84494BF120D8717F00C89923 /* AvatarDownload.swift in Sources */,
 				84C186F220D78399002FFECF /* MainVC.swift in Sources */,
 			);

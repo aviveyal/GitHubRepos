@@ -11,7 +11,7 @@ import Foundation
 class Repo{
     var repoName: String
     var userName: String
-    var language: String?
+    var language: String
     var stars: Int
     var avatar: String
     var forks: Int
@@ -45,21 +45,7 @@ class Repo{
         
     }
     
-    
-    
-//    init(json:Dictionary<String,Any>){
-//        sid = json["sid"] as! String
-//        songName = json["name"] as! String
-//        artistId =  json["artistId"] as! String
-//        length = json["length"] as! String
-//        album = json["album"] as! String
-//        if let im = json["songImage"] as? String{
-//            songImage = im
-//        }
-//        if let ts = json["lastUpdate"] as? Double{
-//            self.lastUpdate = Date.fromFirebase(ts)
-//        }
-//    }
+
     
 }
 

@@ -14,7 +14,7 @@ class GitHubAPI{
     let url = "https://api.github.com/search/repositories" // API URL
     static let instance = GitHubAPI()
         
-    func getLastDay(completion: @escaping ([Repo]) -> ()) {
+    func getLastDay(pageNumber :Int ,completion: @escaping ([Repo]) -> ()) {
         
         var date = Date()
         date = date.yesterday //get last day
@@ -22,7 +22,7 @@ class GitHubAPI{
         formatter.dateFormat = "yyyy-MM-dd" //set the format accordint to GitHub API
         let result = formatter.string(from: date)
         
-        Alamofire.request(url,parameters : ["sort":"stars","order":"desc", "q":"created"+":>"+result]).responseJSON{ response in
+        Alamofire.request(url,parameters : ["sort":"stars","order":"desc", "q":"created"+":>"+result,"page":String(pageNumber)]).responseJSON{ response in
              print(response.request as Any)  // original URL request
 
            completion(self.initRepoList(response: response.result.value as! NSDictionary))
@@ -31,7 +31,7 @@ class GitHubAPI{
     }
     }
         
-    func getLastWeek(completion: @escaping ([Repo]) -> ())
+    func getLastWeek(pageNumber :Int ,completion: @escaping ([Repo]) -> ())
         
     {
         var date = Date()
@@ -41,7 +41,7 @@ class GitHubAPI{
             let result = formatter.string(from: date)
         
             
-        Alamofire.request(url,parameters : ["sort":"stars","order":"desc", "q":"created"+":>"+result]).responseJSON{ response in
+        Alamofire.request(url,parameters : ["sort":"stars","order":"desc", "q":"created"+":>"+result,"page":String(pageNumber)]).responseJSON{ response in
                 print(response.request as Any)  // original URL request
                 completion(self.initRepoList(response: response.result.value as! NSDictionary))
         }
@@ -49,14 +49,14 @@ class GitHubAPI{
      }
 
         
-        func getLastMonth(completion: @escaping ([Repo]) -> ())
+        func getLastMonth(pageNumber :Int ,completion: @escaping ([Repo]) -> ())
         {
             var date = Date()
             date = date.lastMonth //get last month
             print(date)
             formatter.dateFormat = "yyyy-MM-dd" //set the format accordint to GitHub API
             let result = formatter.string(from: date)
-            Alamofire.request(url,parameters : ["sort":"stars","order":"desc", "q":"created"+":>"+result]).responseJSON{ response in
+            Alamofire.request(url,parameters : ["sort":"stars","order":"desc", "q":"created"+":>"+result,"page":String(pageNumber)]).responseJSON{ response in
                 print(response.request as Any)  // original URL request
                 completion(self.initRepoList(response: response.result.value as! NSDictionary))
             }
@@ -71,7 +71,7 @@ class GitHubAPI{
                     var userName : String = " "
                     let repoName = item["name"] as? String
                     let stars = item["stargazers_count"] as? Int
-                    let date = item["created_at"] as? String
+                    let date = String((item["created_at"] as? String)!.split(separator: "T")[0])
                     let forks = item["forks"] as? Int
                     let link = item["html_url"] as? String
                     
@@ -95,7 +95,7 @@ class GitHubAPI{
                     }
                    
                     
-                    repoList.append(Repo(repoName: repoName!, userName: userName, language: language, stars: stars!, avatar: avatar, forks: forks!, date: date!, description: description, link: link!))
+                    repoList.append(Repo(repoName: repoName!, userName: userName, language: language, stars: stars!, avatar: avatar, forks: forks!, date: date, description: description, link: link!))
                     
             }
             }
