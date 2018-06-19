@@ -11,12 +11,12 @@ import Foundation
 class Repo{
     var repoName: String
     var userName: String
-    var language: String
-    var stars: String
-    var avatar: String?
-    var forks: String
+    var language: String?
+    var stars: Int
+    var avatar: String
+    var forks: Int
     var date: String
-    var description: String?
+    var description: String
     var link:String
 
 
@@ -32,16 +32,16 @@ class Repo{
         link = repoData.link
         
     }
-    init(check:String){
-        repoName = check
-        userName = check
-        language = check
-        stars = check
-        avatar = check
-        forks = check
-        date = check
-        description = check
-        link = check
+    init(repoName:String,userName:String,language:String,stars:Int,avatar:String,forks:Int,date:String,description:String,link:String){
+        self.repoName = repoName
+        self.userName = userName
+        self.language = language
+        self.stars = stars
+        self.avatar = avatar
+        self.forks = forks
+        self.date = date
+        self.description = description
+        self.link = link
         
     }
     

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		087ADF14B91E16248A1C7C55 /* Pods_GitHubRepos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45CEAFA0E33DB6FD6D73E02 /* Pods_GitHubRepos.framework */; };
 		72AD414E7833F6F6BFA4B186 /* Pods_GitHubReposTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0AACFE10AA21C9AE76D4570 /* Pods_GitHubReposTests.framework */; };
+		8404509E20D87914007A7735 /* RepoDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8404509D20D87914007A7735 /* RepoDetailsVC.swift */; };
 		842F72F120D67A1600F78C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F72F020D67A1600F78C08 /* AppDelegate.swift */; };
 		842F72F620D67A1600F78C08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 842F72F420D67A1600F78C08 /* Main.storyboard */; };
 		842F72F820D67A1600F78C08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842F72F720D67A1600F78C08 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 		842F732A20D68CE200F78C08 /* RepoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F732920D68CE200F78C08 /* RepoViewCell.swift */; };
 		842F732C20D68D6700F78C08 /* ReposVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F732B20D68D6700F78C08 /* ReposVC.swift */; };
 		842F732E20D69AC300F78C08 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F732D20D69AC300F78C08 /* GitHubAPI.swift */; };
+		84494BF120D8717F00C89923 /* AvatarDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84494BF020D8717F00C89923 /* AvatarDownload.swift */; };
 		84C186F220D78399002FFECF /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C186F120D78399002FFECF /* MainVC.swift */; };
 		84C186F520D78D6B002FFECF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C186F420D78D6B002FFECF /* Date.swift */; };
 		FAA3D0753CAB27C845DF7C25 /* Pods_GitHubReposUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE88E296BE0C20032654415F /* Pods_GitHubReposUITests.framework */; };
@@ -46,6 +48,7 @@
 		073075F7518D8576BDE774F5 /* Pods-GitHubReposUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubReposUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubReposUITests/Pods-GitHubReposUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5F346E0BE93FA5044EE59186 /* Pods-GitHubRepos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubRepos.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubRepos/Pods-GitHubRepos.debug.xcconfig"; sourceTree = "<group>"; };
 		61D5E826E72FD19891E7A0BD /* Pods-GitHubReposUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubReposUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubReposUITests/Pods-GitHubReposUITests.release.xcconfig"; sourceTree = "<group>"; };
+		8404509D20D87914007A7735 /* RepoDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoDetailsVC.swift; sourceTree = "<group>"; };
 		842F72ED20D67A1600F78C08 /* GitHubRepos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubRepos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		842F72F020D67A1600F78C08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		842F72F520D67A1600F78C08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 		842F732920D68CE200F78C08 /* RepoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoViewCell.swift; sourceTree = "<group>"; };
 		842F732B20D68D6700F78C08 /* ReposVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReposVC.swift; sourceTree = "<group>"; };
 		842F732D20D69AC300F78C08 /* GitHubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPI.swift; sourceTree = "<group>"; };
+		84494BF020D8717F00C89923 /* AvatarDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarDownload.swift; sourceTree = "<group>"; };
 		84C186F120D78399002FFECF /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		84C186F420D78D6B002FFECF /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		89418AA70C957FAB12E3F589 /* Pods-GitHubReposTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubReposTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubReposTests/Pods-GitHubReposTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -163,6 +167,7 @@
 				842F732120D6832500F78C08 /* Repo.swift */,
 				842F732320D6834900F78C08 /* Repo+sql.swift */,
 				842F732D20D69AC300F78C08 /* GitHubAPI.swift */,
+				84494BF020D8717F00C89923 /* AvatarDownload.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 			children = (
 				842F732B20D68D6700F78C08 /* ReposVC.swift */,
 				84C186F120D78399002FFECF /* MainVC.swift */,
+				8404509D20D87914007A7735 /* RepoDetailsVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -411,10 +417,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-GitHubRepos/Pods-GitHubRepos-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -429,12 +437,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				842F732220D6832500F78C08 /* Repo.swift in Sources */,
+				8404509E20D87914007A7735 /* RepoDetailsVC.swift in Sources */,
 				842F732E20D69AC300F78C08 /* GitHubAPI.swift in Sources */,
 				842F732420D6834900F78C08 /* Repo+sql.swift in Sources */,
 				84C186F520D78D6B002FFECF /* Date.swift in Sources */,
 				842F732C20D68D6700F78C08 /* ReposVC.swift in Sources */,
 				842F732A20D68CE200F78C08 /* RepoViewCell.swift in Sources */,
 				842F72F120D67A1600F78C08 /* AppDelegate.swift in Sources */,
+				84494BF120D8717F00C89923 /* AvatarDownload.swift in Sources */,
 				84C186F220D78399002FFECF /* MainVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

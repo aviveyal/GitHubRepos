@@ -9,66 +9,98 @@ import Foundation
 import Alamofire
 class GitHubAPI{
     
-    var date = Date()
+    
     let formatter = DateFormatter()
     let url = "https://api.github.com/search/repositories" // API URL
     static let instance = GitHubAPI()
         
-    func getLastDay()
-    {
-        print("date")
+    func getLastDay(completion: @escaping ([Repo]) -> ()) {
+        
+        var date = Date()
         date = date.yesterday //get last day
+        print(date)
         formatter.dateFormat = "yyyy-MM-dd" //set the format accordint to GitHub API
         let result = formatter.string(from: date)
         
-        print(result)
-        
-        let url = "https://api.github.com/search/repositories"
+        Alamofire.request(url,parameters : ["sort":"stars","order":"desc", "q":"created"+":>"+result]).responseJSON{ response in
+             print(response.request as Any)  // original URL request
 
-        let request = Alamofire.request(url,parameters : ["sort":"stars","order":"desc", "q":"created"+">"+result]).responseJSON{ response in
-                        print(response.request as Any)  // original URL request
-//                        print(response.response as Any) // HTTP URL response
-//                        print(response.data as Any)     // server data
-//                        print(response.result as Any)   // result of response serialization
-            print(response)
+           completion(self.initRepoList(response: response.result.value as! NSDictionary))
+            
+            
+    }
     }
         
-    func getLastWeek()
+    func getLastWeek(completion: @escaping ([Repo]) -> ())
         
     {
+        var date = Date()
             date = date.lastWeek //get last day
+        print(date)
             formatter.dateFormat = "yyyy-MM-dd" //set the format accordint to GitHub API
             let result = formatter.string(from: date)
+        
             
-            print(result)
-            
-            let url = "https://api.github.com/search/repositories"
-            
-            let request = Alamofire.request(url,parameters : ["sort":"stars","order":"desc", "q":"created"+">"+result]).responseJSON{ response in
+        Alamofire.request(url,parameters : ["sort":"stars","order":"desc", "q":"created"+":>"+result]).responseJSON{ response in
                 print(response.request as Any)  // original URL request
-                //                        print(response.response as Any) // HTTP URL response
-                //                        print(response.data as Any)     // server data
-                //                        print(response.result as Any)   // result of response serialization
-                print(response)
+                completion(self.initRepoList(response: response.result.value as! NSDictionary))
         }
     
      }
+
         
-        func getLastMonth()
+        func getLastMonth(completion: @escaping ([Repo]) -> ())
         {
-            
-            date = date.lastMonth //get last day
+            var date = Date()
+            date = date.lastMonth //get last month
+            print(date)
             formatter.dateFormat = "yyyy-MM-dd" //set the format accordint to GitHub API
             let result = formatter.string(from: date)
-            
-            
-            let request = Alamofire.request(url,parameters : ["sort":"stars","order":"desc", "q":"created"+">"+result]).responseJSON{ response in
+            Alamofire.request(url,parameters : ["sort":"stars","order":"desc", "q":"created"+":>"+result]).responseJSON{ response in
                 print(response.request as Any)  // original URL request
-                //                        print(response.response as Any) // HTTP URL response
-                //                        print(response.data as Any)     // server data
-                //                        print(response.result as Any)   // result of response serialization
-                print(response)
+                completion(self.initRepoList(response: response.result.value as! NSDictionary))
             }
         }
+
+
+        func initRepoList(response: NSDictionary) -> [Repo]{
+            var repoList = [Repo]()
+     
+            if let items = response["items"] as? [[String : Any]] {
+                for item in items {
+                    var userName : String = " "
+                    let repoName = item["name"] as? String
+                    let stars = item["stargazers_count"] as? Int
+                    let date = item["created_at"] as? String
+                    let forks = item["forks"] as? Int
+                    let link = item["html_url"] as? String
+                    
+                    var language = " "
+                    if(item["language"] as? String != nil){
+                        language = (item["language"] as? String)!
+                    }
+                    var description = " "
+                    if(item["description"] as? String != nil){
+                        description = (item["description"] as? String)!
+                    }
+                    
+                    var avatar = " "
+                    if let owner = item["owner"] as? [String : Any]{
+                        if(owner["avatar_url"] as? String != nil)
+                        {
+                            avatar = (owner["avatar_url"] as? String)!
+                        }
+                        userName = (owner["login"] as? String)!
+                        
+                    }
+                   
+                    
+                    repoList.append(Repo(repoName: repoName!, userName: userName, language: language, stars: stars!, avatar: avatar, forks: forks!, date: date!, description: description, link: link!))
+                    
+            }
+            }
+            
+            return repoList
+        }
 }
-}
+

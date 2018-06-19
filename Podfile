@@ -4,6 +4,7 @@ use_frameworks!
 
 target 'GitHubRepos' do
   pod 'Alamofire', '~> 4.0'
+  pod 'AlamofireImage', '~> 3.3'
   # Pods for GitHubRepos
 
   target 'GitHubReposTests' do
