@@ -18,8 +18,9 @@ class MainVC: UIViewController  {
         if segue.identifier == "favorite"{
             if let destinationVC = segue.destination as? ReposVC {
                 destinationVC.repoList = Repo.getAllReposFromLocalDb(database: ModelSql.instance?.database)
-                //NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+                destinationVC.favoriteList = destinationVC.repoList
                 destinationVC.navigationItem.title = "Favorite"
+                NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
                 destinationVC.needReload = false
                 
             }

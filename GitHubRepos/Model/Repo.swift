@@ -8,7 +8,9 @@
 
 import Foundation
 
-class Repo{
+class Repo : Comparable{
+    
+    
     var repoName: String
     var userName: String
     var language: String
@@ -18,6 +20,7 @@ class Repo{
     var date: String
     var description: String
     var link:String
+    
 
 
     init(repoData:Repo){
@@ -43,6 +46,12 @@ class Repo{
         self.description = description
         self.link = link
         
+    }
+    static func == (one: Repo, two: Repo) -> Bool {
+        return (one.repoName == two.repoName && one.userName == two.userName) //its enough to check only these details
+    }
+    static func <(lhs: Repo, rhs: Repo) -> Bool {
+        return false
     }
     
 

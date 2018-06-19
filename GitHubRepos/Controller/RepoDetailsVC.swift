@@ -9,8 +9,8 @@
 import UIKit
 
 class RepoDetailsVC: UIViewController {
-
-   
+    
+    
     @IBOutlet weak var stars: UILabel!
     @IBOutlet weak var repoName: UILabel!
     @IBOutlet weak var userName: UILabel!
@@ -20,7 +20,9 @@ class RepoDetailsVC: UIViewController {
     @IBOutlet weak var url: UITextView!
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var language: UIImageView!
-
+    @IBOutlet weak var star: UIImageView!
+    @IBOutlet weak var favoriteBtn: UIButton!
+    
     //init string for each label (help init label from segue)
     var repoNameSTR: String = ""
     var userNameSTR: String = ""
@@ -29,10 +31,11 @@ class RepoDetailsVC: UIViewController {
     var createdSTR: String = ""
     var languageSTR: String = ""
     var urlSTR: String = ""
-	var avatarSTR: String = ""
+    var avatarSTR: String = ""
     var starsSTR : String = ""
-
-
+    var favoriteList = [Repo]()
+    var newRepo : Repo? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.repoName.text = repoNameSTR
@@ -47,21 +50,44 @@ class RepoDetailsVC: UIViewController {
             self.avatar.image = image
         })
         
+        //init Repo
+        newRepo = Repo(repoName: repoNameSTR, userName: userNameSTR, language: languageSTR, stars: Int(starsSTR)!, avatar: avatarSTR, forks: Int(forksSTR)!, date: createdSTR, description: descriptionSTR, link: urlSTR)
+        
+        self.favoriteList = Repo.getAllReposFromLocalDb(database: ModelSql.instance?.database) //get all list from local db and check if this repo already favorited
+        
+        //check if the repo exist on the favorite list
+        for repo in favoriteList{
+            if(newRepo == repo) //using comperable
+            {
+                //exist on favorite list
+                star.image = UIImage(named: "starY")
+                favoriteBtn.setTitle("Delete From Favorite", for: .normal)
+                break;
+            }
+            else
+            {
+                star.image = UIImage(named: "star")
+                
+            }
+            
+        }
+        
+        
         switch(languageSTR)
         {
-            case "C":
+        case "C":
             self.language.image = UIImage(named: "C")
-            case "C#":
+        case "C#":
             self.language.image = UIImage(named: "C#")
-            case "HTML":
+        case "HTML":
             self.language.image = UIImage(named: "HTML")
-            case "JavaScript":
+        case "JavaScript":
             self.language.image = UIImage(named: "JavaScript")
-            case "Java":
+        case "Java":
             self.language.image = UIImage(named: "Java")
-            case "Python":
+        case "Python":
             self.language.image = UIImage(named: "Python")
-            case "CSS":
+        case "CSS":
             self.language.image = UIImage(named: "CSS")
             //........
             
@@ -73,38 +99,80 @@ class RepoDetailsVC: UIViewController {
         avatar.layer.cornerRadius = 10
         avatar.clipsToBounds = true
         
-       
+        
     }
-
+    
     @IBAction func addFavorite(_ sender: Any) {
-        let newRepo = Repo(repoName: repoNameSTR, userName: userNameSTR, language: languageSTR, stars: Int(starsSTR)!, avatar: avatarSTR, forks: Int(forksSTR)!, date: createdSTR, description: descriptionSTR, link: urlSTR)
-        if(newRepo.addRepoToLocalDb(database: ModelSql.instance?.database)){
-            //alert user that the repo Successfully added to favorite list
-            let alert = UIAlertController(title: "Favorite list", message: "Successfully addded to your favorite list!", preferredStyle: UIAlertControllerStyle.alert)
-            // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-            // show the alert
-            self.present(alert, animated: true, completion: nil)
+        
+        if(favoriteBtn.currentTitle == "Add To Favorite")
+        {
+            if(self.newRepo?.addRepoToLocalDb(database: ModelSql.instance?.database))!{
+                //update the star to yellow
+                NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+               
+                star.image = UIImage(named: "starY")
+                favoriteBtn.setTitle("Delete From Favorite", for: .normal)
+                
+                //alert user that the repo Successfully added to favorite list
+                let alert = UIAlertController(title: "Favorite list", message: "Successfully addded to your favorite list!", preferredStyle: UIAlertControllerStyle.alert)
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
+                
+            }
+            else
+            {
+                //alert user that the repo not added to favorite list
+                let alert = UIAlertController(title: "Error", message: "Couldn't add to your favorite list, please try again", preferredStyle: UIAlertControllerStyle.alert)
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+            
+        else if(favoriteBtn.currentTitle == "Delete From Favorite")
+        {
+            if(self.newRepo?.deleteRepoFromLocalDb(repo: newRepo! ,database: ModelSql.instance?.database))!{
+    
+                star.image = UIImage(named: "star")
+                favoriteBtn.setTitle("Add To Favorite", for: .normal)
+                
+                NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+                
+                //alert user that the repo Successfully added to favorite list
+                let alert = UIAlertController(title: "Favorite list", message: "Successfully deleted from favorite list!", preferredStyle: UIAlertControllerStyle.alert)
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
+                
+            }
+            else
+            {
+                //alert user that the repo not added to favorite list
+                let alert = UIAlertController(title: "Error", message: "Couldn't delete from favorite list, please try again", preferredStyle: UIAlertControllerStyle.alert)
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+            
+            
             
         }
-        else
-        {
-           //alert user that the repo not added to favorite list
-            let alert = UIAlertController(title: "Error", message: "Couldn't add to your favorite list, please try again", preferredStyle: UIAlertControllerStyle.alert)
-            // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-            // show the alert
-            self.present(alert, animated: true, completion: nil)
-        }
-        }
-
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
     
-
     
-
+    
+    
+    
 }

@@ -21,7 +21,7 @@ extension Repo{
 //    var link:String
     
     static let FAVORITE_TABLE = "FAVORITE"
-    static let REPO_NAME = "REPO_NAME"
+    static let REPO_USER_AND_NAME = "REPO_USER_AND_NAME"
     static let USER_NAME = "USER_NAME"
     static let LANGUAGE = "LANGUAGE"
     static let STARS = "STARS"
@@ -36,7 +36,7 @@ extension Repo{
     static func createTable(database:OpaquePointer?)->Bool{
         var errormsg: UnsafeMutablePointer<Int8>? = nil
         
-        let res = sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS " + FAVORITE_TABLE + " ( " + USER_NAME+"_"+REPO_NAME + " TEXT PRIMARY KEY, "
+        let res = sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS " + FAVORITE_TABLE + " ( " + REPO_USER_AND_NAME + " TEXT PRIMARY KEY, "
             + LANGUAGE + " TEXT, "
             + STARS + " TEXT, "
             + AVATAR + " TEXT, "
@@ -55,7 +55,7 @@ extension Repo{
     func addRepoToLocalDb(database:OpaquePointer?) -> Bool{
         var sqlite3_stmt: OpaquePointer? = nil
         if (sqlite3_prepare_v2(database,"INSERT OR REPLACE INTO " + Repo.FAVORITE_TABLE
-            + "(" + Repo.USER_NAME+"_"+Repo.REPO_NAME + ","
+            + "(" + Repo.REPO_USER_AND_NAME + ","
             + Repo.LANGUAGE + ","
             + Repo.STARS + ","
             + Repo.AVATAR + ","
@@ -65,9 +65,9 @@ extension Repo{
             + Repo.LINK + ") VALUES (?,?,?,?,?,?,?,?);",-1, &sqlite3_stmt,nil) == SQLITE_OK){
             
             var repoNameAndUserName = ""
-            repoNameAndUserName.append(self.repoName)
-            repoNameAndUserName.append("_")
             repoNameAndUserName.append(self.userName)
+            repoNameAndUserName.append("_")
+            repoNameAndUserName.append(self.repoName)
             
             let nameAndUser = repoNameAndUserName.cString(using: .utf8)
             //let user = self.userName.cString(using: .utf8)
@@ -109,18 +109,52 @@ extension Repo{
         }
         
     }
+    func deleteRepoFromLocalDb(repo :Repo ,database:OpaquePointer?) -> Bool{
+        var errormsg: UnsafeMutablePointer<Int8>? = nil
+        var success : Bool = false
+        var sqlite3_stmt: OpaquePointer? = nil
+        var userAndName = ""
+        userAndName.append(repo.userName)
+        userAndName.append("_")
+        userAndName.append(repo.repoName)
+        
+        //let query = "DELETE FROM FAVORITE WHERE " + Repo.USER_NAME+"_"+Repo.REPO_NAME+"=(?);"
+        if sqlite3_prepare_v2(database, "DELETE FROM FAVORITE WHERE " + Repo.REPO_USER_AND_NAME + " = ?;", -1, &sqlite3_stmt, nil) == SQLITE_OK {
+            print(userAndName)
+            let userAndNameUTF = userAndName.cString(using: .utf8)
+           
+            sqlite3_bind_text(sqlite3_stmt, 1, userAndNameUTF,-1,nil);
+        
+            var result = sqlite3_step(sqlite3_stmt)
+            
+            if(result == SQLITE_DONE){
+                print("favorive row deleted succefully from local sql lite DB")
+                success = true
+                
+            }
+            
+            sqlite3_finalize(sqlite3_stmt);
+            
+        }
+        
+
+        return success
+        
+    }
+    
     
     static func getAllReposFromLocalDb(database:OpaquePointer?)->[Repo]{
         var favoriteList = [Repo]()
-        print("starting get from local")
+       
         var sqlite3_stmt: OpaquePointer? = nil
         if (sqlite3_prepare_v2(database,"SELECT * from FAVORITE;",-1,&sqlite3_stmt,nil) == SQLITE_OK){
             while(sqlite3_step(sqlite3_stmt) == SQLITE_ROW){
                 let repoNameAndUserName =  String(validatingUTF8: sqlite3_column_text(sqlite3_stmt,0))?.split(separator: "_")
-                var repoName = ""
-                repoName.append(String(repoNameAndUserName![0]))
+                
                 var userName = ""
-                userName.append(String(repoNameAndUserName![1]))
+                userName.append(String(repoNameAndUserName![0]))
+                var repoName = ""
+                repoName.append(String(repoNameAndUserName![1]))
                 let language =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,1))
                 let stars =  Int(String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,2))!)
                 let avatar =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,3))
