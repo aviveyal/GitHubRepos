@@ -1,6 +1,7 @@
 # GitHubRepos
 
 ////////////// Architecture //////////////
+
 MVC design -
 
 Navigator Controller
@@ -18,6 +19,7 @@ Navigator Controller
 *ModelSql - setup db file on local storage
 
 ////////////// Comments //////////////
+
 *for the repository language I display a logo picture of the programmed language, I downloaded logos of main programming language, but might missing some logos
 
 *Favorite list is cached according to the requirments in the assignment - the repositories on this list are never searched on the internet , that's mean the data on the list shown as was on the time is cached.
