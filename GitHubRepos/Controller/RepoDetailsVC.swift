@@ -89,7 +89,7 @@ class RepoDetailsVC: UIViewController {
             self.language.image = UIImage(named: "Python")
         case "CSS":
             self.language.image = UIImage(named: "CSS")
-            //........
+            //........possible to add more program languages icon
             
             
         default:
@@ -107,9 +107,9 @@ class RepoDetailsVC: UIViewController {
         if(favoriteBtn.currentTitle == "Add To Favorite")
         {
             if(self.newRepo?.addRepoToLocalDb(database: ModelSql.instance?.database))!{
+                
                 //update the star to yellow
                 NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
-               
                 star.image = UIImage(named: "starY")
                 favoriteBtn.setTitle("Delete From Favorite", for: .normal)
                 
@@ -135,10 +135,9 @@ class RepoDetailsVC: UIViewController {
         else if(favoriteBtn.currentTitle == "Delete From Favorite")
         {
             if(self.newRepo?.deleteRepoFromLocalDb(repo: newRepo! ,database: ModelSql.instance?.database))!{
-    
+                
                 star.image = UIImage(named: "star")
                 favoriteBtn.setTitle("Add To Favorite", for: .normal)
-                
                 NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
                 
                 //alert user that the repo Successfully added to favorite list

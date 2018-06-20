@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import AlamofireImage
 class AvatarDownload{
-   
+    
     static let instance = AvatarDownload()
     
     private func saveImageToFile(image:UIImage, name:String){

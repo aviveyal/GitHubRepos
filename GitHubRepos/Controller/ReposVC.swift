@@ -14,7 +14,9 @@ class ReposVC: UIViewController, UITableViewDelegate , UITableViewDataSource,UIS
     var repoList = [Repo]()
     var favoriteList = [Repo]()
     var currentRepoList = [Repo]()
+    
     var needReload = true //incase using asyncronic get reqests
+    
     //spinner and activity indicator initialize
     var activityIndicator :UIActivityIndicatorView = UIActivityIndicatorView()
     var strLabel = UILabel()
@@ -27,7 +29,7 @@ class ReposVC: UIViewController, UITableViewDelegate , UITableViewDataSource,UIS
         pageNumber=1
         self.currentRepoList = self.repoList
         if(needReload){
-        activityIndicator("Loading repositories") //start an activity indicator
+            activityIndicator("Loading repositories") //start an activity indicator
         }
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name("reload"), object: nil, queue: nil) { notification in
@@ -42,17 +44,15 @@ class ReposVC: UIViewController, UITableViewDelegate , UITableViewDataSource,UIS
             self.activityIndicator.stopAnimating() //stop the activity insicator
             self.effectView.removeFromSuperview() // remove from view
             
-        
-    }
-       
-        
+            
+        }
         
         RepoTableView.delegate = self
         RepoTableView.dataSource = self
         searchBar.delegate = self
     }
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -62,26 +62,26 @@ class ReposVC: UIViewController, UITableViewDelegate , UITableViewDataSource,UIS
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-         if let destinationVC = segue.destination as? RepoDetailsVC {
-         if let indexPath = RepoTableView.indexPathForSelectedRow {
-            
-            destinationVC.repoNameSTR = self.currentRepoList[indexPath.row].repoName
-            destinationVC.userNameSTR = self.currentRepoList[indexPath.row].userName
-            destinationVC.descriptionSTR = self.currentRepoList[indexPath.row].description
-            destinationVC.starsSTR = String(self.currentRepoList[indexPath.row].stars)
-            destinationVC.forksSTR = String(self.currentRepoList[indexPath.row].forks)
-            destinationVC.createdSTR = self.currentRepoList[indexPath.row].date
-            destinationVC.urlSTR = self.currentRepoList[indexPath.row].link
-            destinationVC.repoNameSTR = self.currentRepoList[indexPath.row].repoName
-            destinationVC.avatarSTR = self.currentRepoList[indexPath.row].avatar
-            destinationVC.languageSTR = self.currentRepoList[indexPath.row].language
-
+        if let destinationVC = segue.destination as? RepoDetailsVC {
+            if let indexPath = RepoTableView.indexPathForSelectedRow {
+                
+                destinationVC.repoNameSTR = self.currentRepoList[indexPath.row].repoName
+                destinationVC.userNameSTR = self.currentRepoList[indexPath.row].userName
+                destinationVC.descriptionSTR = self.currentRepoList[indexPath.row].description
+                destinationVC.starsSTR = String(self.currentRepoList[indexPath.row].stars)
+                destinationVC.forksSTR = String(self.currentRepoList[indexPath.row].forks)
+                destinationVC.createdSTR = self.currentRepoList[indexPath.row].date
+                destinationVC.urlSTR = self.currentRepoList[indexPath.row].link
+                destinationVC.repoNameSTR = self.currentRepoList[indexPath.row].repoName
+                destinationVC.avatarSTR = self.currentRepoList[indexPath.row].avatar
+                destinationVC.languageSTR = self.currentRepoList[indexPath.row].language
+                
             }
         }
         
     }
     
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return self.currentRepoList.count
@@ -91,28 +91,28 @@ class ReposVC: UIViewController, UITableViewDelegate , UITableViewDataSource,UIS
         
         if (indexPath.row == self.currentRepoList.count-7) { //load more repositories when you 7 from the last one
             pageNumber+=1
-           switch(navigationItem.title) // to know which function to load
-           {
-           case "Last Week"?:
-            GitHubAPI.instance.getLastWeek(pageNumber: pageNumber){ (repos) in
-                self.repoList.append(contentsOf: repos)
-                NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+            switch(navigationItem.title) // to know which function to load
+            {
+            case "Last Week"?:
+                GitHubAPI.instance.getLastWeek(pageNumber: pageNumber){ (repos) in
+                    self.repoList.append(contentsOf: repos)
+                    NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+                }
+            case "Last Day"?:
+                GitHubAPI.instance.getLastDay(pageNumber: pageNumber){ (repos) in
+                    self.repoList.append(contentsOf: repos)
+                    NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+                }
+                
+            case "Last Month"?:
+                GitHubAPI.instance.getLastMonth(pageNumber: pageNumber){ (repos) in
+                    self.repoList.append(contentsOf: repos)
+                    NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+                }
+                
+            default:
+                break
             }
-           case "Last Day"?:
-            GitHubAPI.instance.getLastDay(pageNumber: pageNumber){ (repos) in
-                self.repoList.append(contentsOf: repos)
-                NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
-            }
-            
-           case "Last Month"?:
-            GitHubAPI.instance.getLastMonth(pageNumber: pageNumber){ (repos) in
-                self.repoList.append(contentsOf: repos)
-                NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
-            }
-            
-           default:
-            break
-           }
             
         }
         
@@ -131,15 +131,12 @@ class ReposVC: UIViewController, UITableViewDelegate , UITableViewDataSource,UIS
             if(self.currentRepoList[indexPath.row] == repo) //using comperable
             {
                 //exist on favorite list
-                
-                cell.star.image = UIImage(named: "starY")
+                cell.star.image = UIImage(named: "starY") //yellow star
                 break;
             }
             else
             {
-                cell.star.image = UIImage(named: "star")
-                
-                
+                cell.star.image = UIImage(named: "star") //black star
             }
             
         }
@@ -177,9 +174,6 @@ class ReposVC: UIViewController, UITableViewDelegate , UITableViewDataSource,UIS
         
         self.RepoTableView?.reloadData()
     }
-//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-//        self.searchBar.showsCancelButton = true
-//    }
 
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -188,7 +182,7 @@ class ReposVC: UIViewController, UITableViewDelegate , UITableViewDataSource,UIS
     }
     
     // design of the activity indicator and start animating
-
+    
     func activityIndicator(_ title: String) {
         
         strLabel.removeFromSuperview()
@@ -213,5 +207,5 @@ class ReposVC: UIViewController, UITableViewDelegate , UITableViewDataSource,UIS
         effectView.contentView.addSubview(strLabel)
         view.addSubview(effectView)
     }
-   
+    
 }

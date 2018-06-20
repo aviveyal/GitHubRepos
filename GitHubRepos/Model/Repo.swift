@@ -10,7 +10,6 @@ import Foundation
 
 class Repo : Comparable{
     
-    
     var repoName: String
     var userName: String
     var language: String
@@ -21,20 +20,6 @@ class Repo : Comparable{
     var description: String
     var link:String
     
-
-
-    init(repoData:Repo){
-        repoName = repoData.repoName
-        userName = repoData.userName
-        language = repoData.language
-        stars = repoData.stars
-        avatar = repoData.avatar
-        forks = repoData.forks
-        date = repoData.date
-        description = repoData.description
-        link = repoData.link
-        
-    }
     init(repoName:String,userName:String,language:String,stars:Int,avatar:String,forks:Int,date:String,description:String,link:String){
         self.repoName = repoName
         self.userName = userName
@@ -54,7 +39,7 @@ class Repo : Comparable{
         return false
     }
     
-
+    
     
 }
 

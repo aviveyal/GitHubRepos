@@ -10,10 +10,10 @@ import UIKit
 import Alamofire
 
 class MainVC: UIViewController  {
-  
-   
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var pageNumber = 1 //load the first page
+        let pageNumber = 1 //load the first page
         
         if segue.identifier == "favorite"{
             if let destinationVC = segue.destination as? ReposVC {
@@ -25,41 +25,41 @@ class MainVC: UIViewController  {
                 
             }
         }
-        
+            
         else if(isConnectedToInternet()){
-        if segue.identifier == "lastWeek"{
-            if let destinationVC = segue.destination as? ReposVC {
-                GitHubAPI.instance.getLastWeek(pageNumber: pageNumber){ (repos) in
-                    destinationVC.repoList = repos
-                    NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+            if segue.identifier == "lastWeek"{
+                if let destinationVC = segue.destination as? ReposVC {
+                    GitHubAPI.instance.getLastWeek(pageNumber: pageNumber){ (repos) in
+                        destinationVC.repoList = repos
+                        NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
                         destinationVC.navigationItem.title = "Last Week"
-                    destinationVC.needReload = true
-                       
+                        destinationVC.needReload = true
+                        
+                    }
+                    
                 }
-                
             }
-        }
-        else if segue.identifier == "lastDay"{
-            if let destinationVC = segue.destination as? ReposVC {
-                GitHubAPI.instance.getLastDay(pageNumber: pageNumber){ (repos) in
-                    destinationVC.repoList = repos
-                    NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
-                    destinationVC.navigationItem.title = "Last Day"
-                    destinationVC.needReload = true
-                   
+            else if segue.identifier == "lastDay"{
+                if let destinationVC = segue.destination as? ReposVC {
+                    GitHubAPI.instance.getLastDay(pageNumber: pageNumber){ (repos) in
+                        destinationVC.repoList = repos
+                        NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+                        destinationVC.navigationItem.title = "Last Day"
+                        destinationVC.needReload = true
+                        
+                    }
                 }
-        }
-        }
-        else if segue.identifier == "lastMonth"{
-           if let destinationVC = segue.destination as? ReposVC {
-            GitHubAPI.instance.getLastMonth(pageNumber: pageNumber){ (repos) in
+            }
+            else if segue.identifier == "lastMonth"{
+                if let destinationVC = segue.destination as? ReposVC {
+                    GitHubAPI.instance.getLastMonth(pageNumber: pageNumber){ (repos) in
                         destinationVC.repoList = repos
                         NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
                         destinationVC.navigationItem.title = "Last Month"
                         destinationVC.needReload = true
-                      
-                 }
-           }
+                        
+                    }
+                }
             }
         }
         else
@@ -72,7 +72,7 @@ class MainVC: UIViewController  {
             self.present(alert, animated: true, completion: nil)
         }
         
-       
+        
     }
     
     
@@ -83,25 +83,25 @@ class MainVC: UIViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        
         // Do any additional setup after loading the view.
     }
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

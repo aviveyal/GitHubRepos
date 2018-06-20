@@ -10,15 +10,15 @@ import Foundation
 import SQLite3
 
 extension Repo{
-// var repoName: String
-//    var userName: String
-//    var language: String?
-//    var stars: Int
-//    var avatar: String
-//    var forks: Int
-//    var date: String
-//    var description: String
-//    var link:String
+    // var repoName: String
+    //    var userName: String
+    //    var language: String?
+    //    var stars: Int
+    //    var avatar: String
+    //    var forks: Int
+    //    var date: String
+    //    var description: String
+    //    var link:String
     
     static let FAVORITE_TABLE = "FAVORITE"
     static let REPO_USER_AND_NAME = "REPO_USER_AND_NAME"
@@ -30,7 +30,7 @@ extension Repo{
     static let DATE = "DATE"
     static let DESCRIPTION = "DESCRIPTION"
     static let LINK = "LINK"
-
+    
     
     
     static func createTable(database:OpaquePointer?)->Bool{
@@ -80,8 +80,6 @@ extension Repo{
             let link = self.link.cString(using: .utf8)
             
             
-          
-
             sqlite3_bind_text(sqlite3_stmt, 1, nameAndUser,-1,nil);
             //sqlite3_bind_text(sqlite3_stmt, 2, user,-1,nil);
             sqlite3_bind_text(sqlite3_stmt, 2, language,-1,nil);
@@ -96,13 +94,13 @@ extension Repo{
                 print("new favorive row added succefully to local sql lite DB")
                 sqlite3_finalize(sqlite3_stmt)
                 return true
-
+                
             }
             else{
                 sqlite3_finalize(sqlite3_stmt)
                 return false
             }
-
+            
         }
         else{
             return false
@@ -110,7 +108,7 @@ extension Repo{
         
     }
     func deleteRepoFromLocalDb(repo :Repo ,database:OpaquePointer?) -> Bool{
-        var errormsg: UnsafeMutablePointer<Int8>? = nil
+       
         var success : Bool = false
         var sqlite3_stmt: OpaquePointer? = nil
         var userAndName = ""
@@ -118,26 +116,24 @@ extension Repo{
         userAndName.append("_")
         userAndName.append(repo.repoName)
         
-        //let query = "DELETE FROM FAVORITE WHERE " + Repo.USER_NAME+"_"+Repo.REPO_NAME+"=(?);"
+        
         if sqlite3_prepare_v2(database, "DELETE FROM FAVORITE WHERE " + Repo.REPO_USER_AND_NAME + " = ?;", -1, &sqlite3_stmt, nil) == SQLITE_OK {
             print(userAndName)
             let userAndNameUTF = userAndName.cString(using: .utf8)
-           
+            
             sqlite3_bind_text(sqlite3_stmt, 1, userAndNameUTF,-1,nil);
-        
-            var result = sqlite3_step(sqlite3_stmt)
+            
+            let result = sqlite3_step(sqlite3_stmt)
             
             if(result == SQLITE_DONE){
                 print("favorive row deleted succefully from local sql lite DB")
                 success = true
-                
             }
             
             sqlite3_finalize(sqlite3_stmt);
             
         }
         
-
         return success
         
     }
@@ -145,7 +141,7 @@ extension Repo{
     
     static func getAllReposFromLocalDb(database:OpaquePointer?)->[Repo]{
         var favoriteList = [Repo]()
-       
+        
         var sqlite3_stmt: OpaquePointer? = nil
         if (sqlite3_prepare_v2(database,"SELECT * from FAVORITE;",-1,&sqlite3_stmt,nil) == SQLITE_OK){
             while(sqlite3_step(sqlite3_stmt) == SQLITE_ROW){
@@ -168,7 +164,7 @@ extension Repo{
             }
         }
         sqlite3_finalize(sqlite3_stmt)
-      
+        
         return favoriteList
     }
     
